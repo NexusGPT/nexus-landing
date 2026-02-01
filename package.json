@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mux/mux-player-react": "^3.10.2",
     "@rive-app/react-canvas": "^4.17.3",
     "next": "^16.1.6",
     "react": "^19.0.0",

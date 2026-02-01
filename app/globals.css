@@ -29,13 +29,26 @@
 }
 
 :root {
+  /* Theme colors - aligned with lib/theme.ts */
   --background: #ffffff;
   --foreground: #000000;
+  
+  /* Nexus brand colors */
+  --nexus-black: #000000;
+  --nexus-white: #ffffff;
+  --nexus-orange: #ff6600;
+  --nexus-grey-light: #999999;
+  --nexus-grey-medium: #666666;
+  --nexus-blue-light: #e6f3ff;
+  --nexus-blue-cyan: #b3e5fc;
+  
+  /* Font families - aligned with lib/theme.ts */
   --font-pp-fragment: "PP Fragment Serif", serif;
   --font-sans: "Suisse Int'l Regular", sans-serif;
   --font-mono: "Suisse Int'l Mono", monospace;
+  --font-serif: "PP Fragment Serif", serif;
   
-  /* Default text settings */
+  /* Default text settings - aligned with lib/theme.ts framer settings */
   --framer-font-family: "Suisse Int'l Regular", sans-serif;
   --framer-font-open-type-features: "blwf" on, "cv09" on, "cv03" on, "cv04" on, "cv11" on;
   --framer-font-size: 16px;
@@ -50,6 +63,19 @@
   --framer-text-stroke-color: initial;
   --framer-text-stroke-width: initial;
   --framer-text-transform: none;
+  
+  /* Spacing tokens */
+  --container-max-width: 1440px;
+  --section-px-mobile: 2rem;
+  --section-px-desktop: 5rem;
+  
+  /* Transition tokens */
+  --transition-duration-fast: 75ms;
+  --transition-duration-default: 150ms;
+  --transition-duration-normal: 300ms;
+  --transition-duration-slow: 500ms;
+  --transition-easing-linear: linear;
+  --transition-easing-custom: cubic-bezier(1, 0.17, 0.16, 0.88);
 }
 
 body {

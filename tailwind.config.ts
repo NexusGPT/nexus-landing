@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+// Use JavaScript version for Tailwind config compatibility
+const { theme: tokens } = require("./lib/theme.js");
 
 const config: Config = {
   content: [
@@ -11,25 +13,44 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        nexus: {
-          black: "#000000",
-          white: "#FFFFFF",
-          orange: "#FF6600",
-          grey: {
-            light: "#999999",
-            medium: "#666666",
-          },
-          blue: {
-            light: "#E6F3FF",
-            cyan: "#B3E5FC",
-          },
-        },
+        nexus: tokens.colors.nexus,
+        neutral: tokens.colors.neutral,
       },
       fontFamily: {
-        serif: ["var(--font-serif)", "serif"],
-        sans: ["var(--font-sans)", "sans-serif"],
-        mono: ["var(--font-mono)", "monospace"],
-        "pp-fragment": ["var(--font-pp-fragment)", "serif"],
+        serif: [tokens.fonts.serif],
+        sans: [tokens.fonts.sans],
+        mono: [tokens.fonts.mono],
+        "pp-fragment": [tokens.fonts["pp-fragment"]],
+      },
+      fontSize: {
+        ...tokens.fontSize,
+      },
+      fontWeight: {
+        ...tokens.fontWeight,
+      },
+      lineHeight: {
+        ...tokens.lineHeight,
+      },
+      letterSpacing: {
+        ...tokens.letterSpacing,
+      },
+      borderRadius: {
+        ...tokens.borderRadius,
+      },
+      boxShadow: {
+        ...tokens.shadows,
+      },
+      transitionDuration: {
+        ...tokens.transitions.duration,
+      },
+      transitionTimingFunction: {
+        ...tokens.transitions.easing,
+      },
+      zIndex: {
+        ...tokens.zIndex,
+      },
+      maxWidth: {
+        container: tokens.spacing.container.maxWidth,
       },
     },
   },
