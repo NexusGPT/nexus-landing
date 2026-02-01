@@ -1,29 +1,21 @@
-import { readFileSync } from 'fs'
-import { join } from 'path'
-import PageContent from './PageContent'
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import EnterpriseSection from "@/components/EnterpriseSection";
+import SolutionSection from "@/components/SolutionSection";
+import TrustBar from "@/components/TrustBar";
+import Testimonials from "@/components/Testimonials";
+import Footer from "@/components/Footer";
 
-// Server component: read HTML at build time
-function getBodyHTML(): string {
-  try {
-    return readFileSync(join(process.cwd(), 'app/page-body.html'), 'utf-8')
-  } catch (e) {
-    console.error('Failed to load page body HTML:', e)
-    return ''
-  }
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-nexus-white">
+      <Header />
+      <Hero />
+      <TrustBar />
+      <EnterpriseSection />
+      <SolutionSection />
+      <Testimonials />
+      <Footer />
+    </main>
+  );
 }
-
-export default function HomePage() {
-  const bodyHTML = getBodyHTML()
-  
-  if (!bodyHTML) {
-    return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <h1>Error loading page content</h1>
-        <p>Please check that app/page-body.html exists</p>
-      </div>
-    )
-  }
-
-  return <PageContent html={bodyHTML} />
-}
-

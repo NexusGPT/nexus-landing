@@ -1,0 +1,52 @@
+export const RoadmapIcon = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="4"
+      y="4"
+      width="6"
+      height="6"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      fill="none"
+    />
+    <rect
+      x="12"
+      y="4"
+      width="6"
+      height="6"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      fill="none"
+    />
+    <rect
+      x="4"
+      y="12"
+      width="6"
+      height="6"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      fill="none"
+    />
+    <rect
+      x="12"
+      y="12"
+      width="6"
+      height="6"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      fill="none"
+    />
+    <path
+      d="M10 7 L12 9 M7 10 L9 12"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </svg>
+);
