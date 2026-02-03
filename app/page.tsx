@@ -13,7 +13,7 @@ import { createPageMetadata } from "@/lib/metadata";
 import { reviewSchema, escapeJsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Nexus - Business-led Enterprise AI Platform | Transform Workflows into AI Agents",
+  title: "Nexus - Business-led Enterprise AI Platform",
   description:
     "The only enterprise platform where business teams transform workflows into autonomous AI agents in days, not months. SOC 2, ISO 27001, ISO 42001 certified. Backed by Y Combinator.",
   path: "/",

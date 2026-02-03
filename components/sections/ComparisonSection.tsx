@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui";
+import { Button, FadeInUp } from "@/components/ui";
 
 // Row labels for the comparison
 const rowLabels = ["FLEXIBILITY", "CONTROL", "SPEED", "COST"];
@@ -123,31 +123,36 @@ export default function ComparisonSection() {
       <div className="max-w-[1440px] mx-auto">
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-12 lg:mb-24">
-          <h2 className="font-pp-fragment text-3xl sm:text-4xl lg:text-5xl font-normal text-nexus-black leading-tight mb-8">
-            Why leaders choose Nexus
-            <br />
-            over other solutions
-          </h2>
-          <Button
-            href="https://calendly.com/d/crcb-qfd-592"
-            variant="primary"
-            newTab
-          >
-            REQUEST A DEMO
-          </Button>
+          <FadeInUp>
+            <h2 className="font-pp-fragment text-3xl sm:text-4xl lg:text-5xl font-normal text-nexus-black leading-tight mb-8">
+              Why leaders choose Nexus
+              <br />
+              over other solutions
+            </h2>
+          </FadeInUp>
+          <FadeInUp delay={0.1}>
+            <Button
+              href="https://calendly.com/d/crcb-qfd-592"
+              variant="primary"
+              newTab
+            >
+              REQUEST A DEMO
+            </Button>
+          </FadeInUp>
         </div>
 
         {/* Mobile Comparison Cards - Show on screens below lg */}
         <div className="lg:hidden flex flex-col gap-6">
           {/* Nexus Card - Featured at top on mobile */}
-          <div 
-            className="rounded-lg overflow-hidden"
-            style={{
-              backgroundImage: "url('/nexus-col.png')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
+          <FadeInUp>
+            <div 
+              className="rounded-lg overflow-hidden"
+              style={{
+                backgroundImage: "url('/nexus-col.png')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
             <div className="p-5">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-6 h-6 relative">
@@ -173,53 +178,56 @@ export default function ComparisonSection() {
                 ))}
               </div>
             </div>
-          </div>
+            </div>
+          </FadeInUp>
 
           {/* Competitor Cards */}
-          {columns.slice(0, 3).map((column) => (
-            <div key={column.id} className="bg-neutral-50 rounded-lg overflow-hidden">
-              <div className="p-5">
-                <div className="flex items-center gap-3 mb-4">
-                  {column.id === "ai-tools" || column.id === "rpa" ? (
-                    <div className="flex items-center gap-2">
-                      {column.logos?.slice(0, 3).map((logo, idx) => (
-                        <div key={idx} className="w-5 h-5 relative">
-                          <Image
-                            src={logo.src}
-                            alt={logo.alt}
-                            fill
-                            className="object-contain"
-                          />
-                        </div>
-                      ))}
-                      <span className="font-mono text-[10px] text-nexus-grey-medium">
-                        +{(column.logos?.length || 0) - 3}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="text-nexus-black">{column.icon}</div>
-                  )}
-                </div>
-                <h3 className="font-sans text-lg font-medium text-nexus-black mb-4">
-                  {column.title}
-                </h3>
-                <div className="flex flex-col gap-3">
-                  {column.items.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <XIcon />
-                      <span className="font-sans text-sm text-nexus-grey-medium leading-relaxed">
-                        {item}
-                      </span>
-                    </div>
-                  ))}
+          {columns.slice(0, 3).map((column, index) => (
+            <FadeInUp key={column.id} delay={0.1 + index * 0.08}>
+              <div className="bg-neutral-50 rounded-lg overflow-hidden">
+                <div className="p-5">
+                  <div className="flex items-center gap-3 mb-4">
+                    {column.id === "ai-tools" || column.id === "rpa" ? (
+                      <div className="flex items-center gap-2">
+                        {column.logos?.slice(0, 3).map((logo, idx) => (
+                          <div key={idx} className="w-5 h-5 relative">
+                            <Image
+                              src={logo.src}
+                              alt={logo.alt}
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
+                        ))}
+                        <span className="font-mono text-[10px] text-nexus-grey-medium">
+                          +{(column.logos?.length || 0) - 3}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="text-nexus-black">{column.icon}</div>
+                    )}
+                  </div>
+                  <h3 className="font-sans text-lg font-medium text-nexus-black mb-4">
+                    {column.title}
+                  </h3>
+                  <div className="flex flex-col gap-3">
+                    {column.items.map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-3">
+                        <XIcon />
+                        <span className="font-sans text-sm text-nexus-grey-medium leading-relaxed">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </FadeInUp>
           ))}
         </div>
 
         {/* Desktop Comparison Grid - Hidden on mobile */}
-        <div className="hidden lg:block w-full overflow-x-auto">
+        <FadeInUp className="hidden lg:block w-full overflow-x-auto">
           <div className="min-w-[1000px]">
             {/* Grid Layout */}
             <div className="grid grid-cols-[140px_1fr_1fr_1fr_1fr] gap-x-3">
@@ -327,7 +335,7 @@ export default function ComparisonSection() {
               </div>
             </div>
           </div>
-        </div>
+        </FadeInUp>
       </div>
     </section>
   );

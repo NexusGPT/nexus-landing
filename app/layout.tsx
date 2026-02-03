@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display } from "next/font/google";
+// @ts-ignore
 import "./globals.css";
 import WebVitals from "@/components/WebVitals";
 import { Header, Footer } from "@/components/layout";
@@ -54,8 +55,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og-image.png",
-        width: 1200,
-        height: 630,
+        width: 850,
+        height: 447,
         alt: "Nexus AI Platform",
       },
     ],
@@ -101,6 +102,9 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://calendly.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preconnect for PP Fragment Serif font */}
+        <link rel="preconnect" href="https://framerusercontent.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://framerusercontent.com" />
       </head>
       <body className={playfairDisplay.variable}>
         {/* Organization Schema */}

@@ -1,14 +1,14 @@
+import Image from "next/image";
+
 export default function HeroBackground() {
   return (
-    <div className="absolute h-full min-h-[600px] w-screen rounded overflow-hidden">
+    <div className="absolute h-full min-h-[600px] w-screen rounded">
       <svg
         style={{
-          top: "-700px",
-          right: "-580px",
           width: "1798px",
           height: "1427px",
         }}
-        className="absolute blur-[100px]"
+        className="absolute blur-[100px] top-[-1050px] right-[-550px] md:top-[-700px] md:right-[-580px]"
         viewBox="0 0 1798 1427"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -50,14 +50,13 @@ export default function HeroBackground() {
 
       <div
         className="absolute inset-0 bg-white opacity-50"
-        style={{ mixBlendMode: "color-burn" }}
-      >
-        <img
-          src="/bg-grain.avif"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      </div>
+        style={{ 
+          backgroundImage: "url('/bg-grain.avif')", 
+          backgroundRepeat: "repeat", 
+          backgroundSize: "512px 256px", 
+          mixBlendMode: "color-burn" 
+        }}
+      /> 
     </div>
   );
 }

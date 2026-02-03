@@ -1,6 +1,7 @@
 "use client";
 
 import { TestimonialCard } from "@/components/cards";
+import { FadeInUp } from "@/components/ui";
 
 interface Stat {
   number: string;
@@ -49,26 +50,26 @@ export default function Testimonials() {
     >
       <div className="max-w-[1440px] mx-auto ">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-10 mb-12 lg:mb-16">
+        <FadeInUp className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-10 mb-12 lg:mb-16">
           <h2 className="font-serif text-4xl lg:text-5xl font-normal text-nexus-black leading-tight">
             Proven solutions{" "}
             <br/>Across industries
           </h2>
           {/* Navigation buttons would go here if needed */}
-        </div>
+        </FadeInUp>
 
         {/* Testimonial Cards - Horizontal Scroll on Desktop */}
-        <div className="overflow-x-auto lg:overflow-x-visible">
-          <div className="flex gap-4 min-w-max lg:min-w-0">
+        <FadeInUp delay={0.15}>
+          <div className="flex gap-4 lg:min-w-0">
             {testimonials.map((testimonial, index) => (
               <TestimonialCard
                 key={index}
                 {...testimonial}
-                className="min-w-[358px] lg:min-w-0"
+                className="lg:min-w-0"
               />
             ))}
           </div>
-        </div>
+        </FadeInUp>
       </div>
     </section>
   );

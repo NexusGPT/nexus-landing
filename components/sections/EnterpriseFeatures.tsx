@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui";
+import { Button, FadeInUp } from "@/components/ui";
 
 interface FeatureTab {
   id: string;
@@ -37,7 +37,54 @@ const featureTabs: FeatureTab[] = [
 
 export default function EnterpriseFeatures() {
   const [activeTab, setActiveTab] = useState(0);
+  const [indicatorTop, setIndicatorTop] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
+  const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lineContainerRef = useRef<HTMLDivElement>(null);
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+
+  // Update line height to match tabs container on mobile, image container on desktop
+  useEffect(() => {
+    const updateLineHeight = () => {
+      const tabsContainer = tabsContainerRef.current;
+      const lineContainer = lineContainerRef.current;
+      const imageContainer = imageContainerRef.current;
+      
+      if (!lineContainer) return;
+      
+      if (window.innerWidth < 1024) {
+        // Mobile: match tabs height
+        if (tabsContainer) {
+          const tabsHeight = tabsContainer.offsetHeight;
+          lineContainer.style.height = `${tabsHeight}px`;
+        }
+      } else {
+        // Desktop: match image container height
+        if (imageContainer) {
+          const imageHeight = imageContainer.offsetHeight;
+          lineContainer.style.height = `${imageHeight}px`;
+        }
+      }
+    };
+
+    // Update on mount and resize
+    updateLineHeight();
+    window.addEventListener('resize', updateLineHeight);
+    
+    // Also update when images load (in case they affect container height)
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+      img.addEventListener('load', updateLineHeight);
+    });
+    
+    return () => {
+      window.removeEventListener('resize', updateLineHeight);
+      images.forEach(img => {
+        img.removeEventListener('load', updateLineHeight);
+      });
+    };
+  }, [activeTab]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,46 +114,107 @@ export default function EnterpriseFeatures() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Calculate indicator position based on active tab's position
+  useEffect(() => {
+    const updateIndicatorPosition = () => {
+      const activeTabElement = tabRefs.current[activeTab];
+      const lineContainer = lineContainerRef.current;
+      
+      if (!activeTabElement || !lineContainer) return;
+      
+      // Get the common parent container (the flex container holding both tabs and line)
+      const parentContainer = activeTabElement.closest('.flex.items-start');
+      if (!parentContainer) return;
+      
+      const tabRect = activeTabElement.getBoundingClientRect();
+      const parentRect = (parentContainer as HTMLElement).getBoundingClientRect();
+      const containerRect = lineContainer.getBoundingClientRect();
+      
+      // Calculate the center of the tab text relative to the parent container
+      const tabCenterRelativeToParent = tabRect.top + tabRect.height / 2 - parentRect.top;
+      
+      // The line container starts at the same top as the parent (items-start alignment)
+      // So we can use the tab's position relative to parent directly
+      const relativePosition = tabCenterRelativeToParent;
+      
+      // Subtract half the indicator height to center it on the text
+      const indicatorHeight = window.innerWidth >= 1024 ? 20 : window.innerWidth >= 640 ? 20 : 16; // h-4 = 16px, h-5 = 20px
+      setIndicatorTop(relativePosition - indicatorHeight / 2);
+    };
+
+    // Use requestAnimationFrame to ensure layout is complete
+    requestAnimationFrame(() => {
+      updateIndicatorPosition();
+    });
+    
+    window.addEventListener('resize', updateIndicatorPosition);
+    
+    return () => window.removeEventListener('resize', updateIndicatorPosition);
+  }, [activeTab]);
+
   return (
     <section 
+      id="features"
       ref={sectionRef}
       className="relative h-[200vh] sm:h-[250vh] lg:h-[300vh] bg-nexus-white"
     >
-      <div className="sticky top-0 h-screen flex items-center px-8 lg:px-20 py-12 sm:py-16 lg:py-28">
+      <div className="sticky top-0 min-h-screen flex items-center px-8 lg:px-20 py-12 sm:py-16 lg:py-28">
         <div className="max-w-[1440px] mx-auto w-full">
         {/* Header */}
         <div className="text-center flex flex-col items-center mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="font-pp-fragment text-2xl sm:text-3xl lg:text-5xl font-normal text-nexus-black leading-tight mb-4 sm:mb-6">
-            Enterprise power without
-            <br />
-            enterprise complexity
-          </h2>
-          <p className="font-sans text-sm sm:text-base max-w-[700px] mx-auto mb-6 sm:mb-8 text-nexus-grey-medium leading-normal">
-            From zero to production in minutes. Works with every tool you already
-            use. Grows with your business, not your headcount.
-          </p>
-          <Button
-            href="https://calendly.com/d/crcb-qfd-592"
-            variant="primary"
-            newTab
-          >
-            REQUEST A DEMO
-          </Button>
+          <FadeInUp>
+            <h2 className="font-pp-fragment text-2xl sm:text-3xl lg:text-5xl font-normal text-nexus-black leading-tight mb-4 sm:mb-6">
+              Enterprise power without
+              <br />
+              enterprise complexity
+            </h2>
+          </FadeInUp>
+          <FadeInUp delay={0.1}>
+            <p className="font-sans text-sm sm:text-base max-w-[700px] mx-auto mb-6 sm:mb-8 text-nexus-grey-medium leading-normal">
+              From zero to production in minutes. Works with every tool you already
+              use. Grows with your business, not your headcount.
+            </p>
+          </FadeInUp>
+          <FadeInUp delay={0.2}>
+            <Button
+              href="https://calendly.com/d/crcb-qfd-592"
+              variant="primary"
+              newTab
+              className="mt-4"
+            >
+              REQUEST A DEMO
+            </Button>
+          </FadeInUp>
         </div>
 
         {/* Feature Display */}
-        <div className="flex flex-col lg:flex-row items-start gap-4 sm:gap-6 lg:gap-12">
+        <div className="flex flex-col lg:flex-row items-start gap-4 sm:gap-6 lg:gap-12 relative">
           {/* Left Navigation with line */}
           <div className="flex items-start gap-2 sm:gap-3 shrink-0 w-full lg:w-auto">
+            {/* Line container - spans full image height on desktop, matches tabs height on mobile */}
+            <div ref={lineContainerRef} className="relative w-0.5 h-[200px] sm:h-[250px] order-1 lg:order-2">
+              {/* Grey background line */}
+              <div className="absolute inset-0 bg-nexus-black/10" />
+              
+              {/* Orange animated line */}
+              <div
+                className="absolute left-0 right-0 bg-[#F5461A] transition-all duration-500 ease-out h-4 sm:h-5"
+                style={{
+                  top: `${indicatorTop}px`,
+                }}
+              ></div>
+            </div>
+            
             {/* Navigation buttons */}
-            <div className="flex flex-col gap-3 sm:gap-4 lg:gap-6">
+            <div ref={tabsContainerRef} className="flex flex-col gap-3 sm:gap-4 lg:gap-6 order-2 lg:order-1">
               {featureTabs.map((tab, index) => (
                 <div
                   key={tab.id}
-                  className="flex items-center justify-end text-right group"
+                  ref={(el) => { tabRefs.current[index] = el; }}
+                  className="flex items-center justify-start lg:justify-end text-left lg:text-right group"
                 >
                   <span
-                    className={`font-mono text-[10px] sm:text-xs lg:text-sm tracking-wider transition-colors duration-300 text-right ${
+                    className={`font-mono text-[10px] sm:text-xs lg:text-sm tracking-wider transition-colors duration-300 text-left lg:text-right ${
                       activeTab === index
                         ? "text-[#F5461A]"
                         : "text-nexus-black/50"
@@ -117,24 +225,10 @@ export default function EnterpriseFeatures() {
                 </div>
               ))}
             </div>
-            
-            {/* Line container - spans full image height */}
-            <div className="relative w-0.5 h-[200px] sm:h-[250px] lg:h-[450px]">
-              {/* Grey background line */}
-              <div className="absolute inset-0 bg-nexus-black/10" />
-              
-              {/* Orange animated line */}
-              <div
-                className="absolute left-0 right-0 bg-[#F5461A] transition-all duration-500 ease-out h-4 sm:h-5"
-                style={{
-                  top: `calc(${activeTab} * (0.75rem + 1rem))`,
-                }}
-              ></div>
-            </div>
           </div>
 
-          {/* Center Image - fills space */}
-          <div className="flex-1 relative min-h-[200px] sm:min-h-[250px] lg:min-h-[450px] w-full">
+          {/* Center Image - full width on mobile, fills space on desktop */}
+          <div ref={imageContainerRef} className="flex-1 relative aspect-[4/3] lg:aspect-auto lg:min-h-[450px] absolute lg:relative left-[calc(50%-50vw)] lg:left-auto w-screen lg:w-auto min-w-0">
             {featureTabs.map((tab, index) => (
               <div
                 key={tab.id}
@@ -148,7 +242,7 @@ export default function EnterpriseFeatures() {
                   src={tab.image}
                   alt={tab.label}
                   fill
-                  className="object-contain object-left-top"
+                  className="object-contain object-center lg:object-left-top"
                   priority={index === 0}
                 />
               </div>

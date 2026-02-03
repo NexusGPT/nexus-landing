@@ -32,8 +32,8 @@ export function createPageMetadata(options: PageMetadataOptions): Metadata {
       images: [
         {
           url: "/og-image.png",
-          width: 1200,
-          height: 630,
+          width: 850,
+          height: 447,
           alt: "Nexus AI Platform",
         },
       ],

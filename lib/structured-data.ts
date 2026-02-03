@@ -124,6 +124,29 @@ export function reviewSchema(review: Review) {
   };
 }
 
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+/**
+ * Generates FAQPage schema JSON-LD
+ */
+export function faqSchema(items: FAQItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
 /**
  * Escapes HTML characters in JSON-LD strings to prevent XSS
  */

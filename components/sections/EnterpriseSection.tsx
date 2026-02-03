@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, ReactNode } from "react";
 import dynamic from "next/dynamic";
-import { Button } from "@/components/ui";
+import { Button, FadeInUp } from "@/components/ui";
 import {
   ExecutiveIcon,
   BusinessIcon,
@@ -198,19 +198,19 @@ export default function EnterpriseSection() {
   };
 
   return (
-    <section id="features" className="py-16 lg:py-24 px-8 lg:px-20 bg-nexus-white">
+    <section id="use-case" className="py-16 lg:py-24 px-8 lg:px-20 bg-nexus-white">
       <div className="max-w-[1440px] mx-auto">
         {/* Header */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-0 mb-12 lg:mb-16">
           {/* Left: Title */}
-          <div>
-            <h2 className="text-2xl lg:text-5xl font-pp-fragment font-normal leading-[1.1] tracking-tight text-nexus-black">
+          <FadeInUp>
+            <h2 className="text-3xl lg:text-5xl font-pp-fragment font-normal leading-[1.1] tracking-tight text-nexus-black">
               For the world&apos;s<br/>best enterprises
             </h2>
-          </div>
+          </FadeInUp>
           
           {/* Right: Description + CTA */}
-          <div className="flex flex-col items-start lg:ml-auto w-full lg:w-[513px]">
+          <FadeInUp delay={0.1} className="flex flex-col items-start lg:ml-auto w-full lg:w-[513px]">
             <p className="font-sans text-[#666666] text-base leading-relaxed mb-6 max-w-[500px]">
               Nexus enables your team to deploy 100x faster without involving your engineering team and with no compromise to security.            
             </p>
@@ -221,55 +221,54 @@ export default function EnterpriseSection() {
             >
               REQUEST A DEMO
             </Button>
-          </div>
+          </FadeInUp>
         </div>
 
         {/* Tab Navigation */}
         <div className="mb-8 w-full">
-          <div className="flex items-end w-full overflow-x-auto scrollbar-hide">
+          <div className="flex flex-col lg:flex-row items-start lg:items-end w-full overflow-x-auto scrollbar-hide relative gap-2 sm:gap-3 lg:gap-4 pb-4 md:pb-0">
             {tabs.map((tab, index) => (
               <button
                 key={tab.id}
                 onClick={() => handleTabClick(index)}
-                className={`flex flex-col flex-1 min-w-0 items-start gap-2 lg:gap-3 whitespace-nowrap transition-colors pb-2 relative ${
+                className={`flex flex-col flex-1 min-w-0 items-start gap-2 lg:gap-3 whitespace-nowrap transition-colors relative pb-1 sm:pb-2 ${
                   activeTab === index
                     ? "text-nexus-black"
                     : "text-nexus-grey-medium"
                 }`}
               >
-                <div className="flex items-center pb-[29px] gap-1 sm:gap-2 lg:gap-3">
+                <div className="flex items-center pb-0 lg:pb-[29px] gap-3 w-full">
                   <div className={`flex-shrink-0 transition-colors duration-[3000ms] w-8 h-8 sm:w-10 sm:h-10 items-center justify-center flex flex-row ${activeTab === index ? "text-nexus-black bg-neutral-200" : "text-nexus-grey-medium bg-neutral-50"}`}>
                     {tab.icon}
                   </div>
-                  <span className="font-mono text-[10px] sm:text-xs lg:text-sm uppercase tracking-wide hidden sm:inline">
+                  <span className="font-mono text-xs lg:text-sm uppercase tracking-wide">
                     {tab.label}
                   </span>
                 </div>
-                
-                {/* Underline for all tabs */}
-                <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gray-100`} />
-                
-                {/* Progress Bar - only show under active tab */}
-                {activeTab === index && (
-                  <div 
-                    key={`progress-${activeTab}`}
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-transparent"
-                  >
-                    <div
-                      className="h-full bg-nexus-orange transition-all duration-75 ease-linear"
-                      style={{
-                        width: `${progress}%`,
-                      }}
-                    />
-                  </div>
-                )}
               </button>
+            ))}
+            
+            {/* Underline for all tabs - positioned at container bottom */}
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-100 pointer-events-none" />
+            
+            {/* Orange line - only show under active tab, positioned at container bottom with animation */}
+            {tabs.map((tab, index) => (
+              activeTab === index && (
+                <div
+                  key={`orange-${index}`}
+                  className="hidden lg:block absolute bottom-0 h-0.5 bg-nexus-orange pointer-events-none transition-all duration-75 ease-linear"
+                  style={{
+                    left: `${(index / tabs.length) * 100}%`,
+                    width: `${(100 / tabs.length) * (progress / 100)}%`,
+                  }}
+                />
+              )
             ))}
           </div>
         </div>
 
         {/* Content Area */}
-        <div className="rounded-lg overflow-hidden">
+        <FadeInUp delay={0.2} className="rounded-lg overflow-hidden">
           <div className="flex flex-col lg:flex-row gap-4 w-full">
             {/* Left Column: Rive Animation */}
             <div className="bg-[#f7f7f7] flex-1 flex items-center justify-center">
@@ -303,7 +302,7 @@ export default function EnterpriseSection() {
               ))}
             </div>
           </div>
-        </div>
+        </FadeInUp>
       </div>
     </section>
   );

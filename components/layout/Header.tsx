@@ -42,11 +42,33 @@ export default function Header() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Only handle hash links (not regular page links)
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        // Calculate offset for fixed header
+        const headerHeight = 80; // Approximate header height
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smooth",
+        });
+      }
+    }
+    // For non-hash links (like /blog), let Next.js handle navigation normally
+  };
+
   const navLinks = [
     { href: "#use-case", label: "Use case" },
     { href: "#features", label: "Features" },
     { href: "#how-it-works", label: "How it works" },
     { href: "#testimonials", label: "Testimonials" },
+    { href: "/blog", label: "Blog" },
   ];
 
   return (
@@ -66,7 +88,7 @@ export default function Header() {
               alt="Nexus"
               width={80}
               height={31}
-              className="h-6 lg:h-8 w-auto"
+              className="h-8 w-auto"
               priority
             />
           </Link>
@@ -77,6 +99,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="group relative text-nexus-black font-sans text-sm font-medium transition-opacity"
               >
                 {link.label}
@@ -93,7 +116,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden flex flex-col gap-1.5 w-6 h-6 justify-center items-center"
+            className="lg:hidden ml-auto flex flex-col gap-1.5 w-6 h-6 justify-center items-center"
             onClick={toggleMobileMenu}
             aria-label="Toggle menu"
           >
@@ -126,8 +149,11 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={(e) => {
+                  handleNavClick(e, link.href);
+                  setIsMobileMenuOpen(false);
+                }}
                 className="text-nexus-black font-sans text-sm font-medium hover:opacity-70 transition-opacity py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}
               </Link>

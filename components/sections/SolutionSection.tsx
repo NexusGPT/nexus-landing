@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui";
+import { Button, FadeInUp } from "@/components/ui";
 
 interface ProblemCard {
   title: string;
@@ -78,13 +78,13 @@ export default function SolutionSection() {
       <div className="max-w-[1440px] mx-auto relative z-10">
         {/* Header */}
         <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between mb-10 sm:mb-16 lg:mb-20 gap-4 sm:gap-6 lg:gap-8">
-          <div className="flex-1">
-            <h2 className="text-2xl lg:text-5xl font-pp-fragment font-normal leading-[1.1] tracking-tight text-white mb-4 lg:mb-6">
+          <FadeInUp className="flex-1">
+            <h2 className="text-3xl lg:text-5xl font-pp-fragment font-normal leading-[1.1] tracking-tight text-white mb-4 lg:mb-6">
               The only solution
               <br /> that adapts like you do
             </h2>
-          </div>
-          <div className="flex-shrink-0 w-full lg:w-auto">
+          </FadeInUp>
+          <FadeInUp delay={0.1} className="flex-shrink-0 w-full lg:w-auto">
             <Button
               href="https://calendly.com/d/crcb-qfd-592"
               variant="secondary-white"
@@ -93,139 +93,145 @@ export default function SolutionSection() {
             >
               REQUEST A DEMO
             </Button>
-          </div>
+          </FadeInUp>
         </div>
-        <p className="font-sans text-white/80 text-base lg:text-lg leading-relaxed">
-          The more flexible solutions are, the less reliable they become. Most
-          agentic systems are stuck in this trade-off.
-        </p>
+        <FadeInUp delay={0.2}>
+          <p className="font-sans text-white/80 text-base lg:text-lg leading-relaxed">
+            The more flexible solutions are, the less reliable they become. Most
+            agentic systems are stuck in this trade-off.
+          </p>
+        </FadeInUp>
         {/* Trade-off Section */}
-        <div className="mb-12 sm:mb-16 lg:mb-24">
-          <div className="mb-3">
-            <div className="relative w-full h-auto">
-              <FlexibleSolutionBG />
-              <Image
-                src="/solution-section/flexible-solution.svg"
-                alt="Reliability vs Flexibility Trade-off"
-                width={1440}
-                height={946}
-                className="w-full h-auto p-4 sm:p-8 lg:p-12"
-                priority
-              />
+        <div className="mb-12 mt-4 sm:mb-16 lg:mb-24">
+          <FadeInUp delay={0.1}>
+            <div className="mb-3">
+              <div className="relative w-full h-auto">
+                <FlexibleSolutionBG />
+                <Image
+                  src="/solution-section/flexible-solution.svg"
+                  alt="Reliability vs Flexibility Trade-off"
+                  width={1440}
+                  height={946}
+                  className="w-full h-auto p-4 sm:p-8 lg:p-12"
+                  priority
+                />
+              </div>
             </div>
-          </div>
+          </FadeInUp>
           {/* Problem Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {problems.map((problem, index) => (
-              <div
-                key={index}
-                className="bg-[#FFFFFF05] text-sm p-3 flex flex-col gap-2 transition-colors"
-              >
-                <div className="flex items-start gap-4">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
+              <FadeInUp key={index} delay={0.15 + index * 0.05}>
+                <div className="bg-[#FFFFFF05] text-sm p-3 flex flex-col gap-2 transition-colors h-full">
+                  <div className="flex items-start gap-4">
+                    <svg
                       width="32"
                       height="32"
-                      fill="#FF3D40"
-                      fillOpacity="0.12"
-                    />
-                    <path
-                      d="M11.1719 11.168L20.8385 20.8346M20.8385 11.168L11.1719 20.8346"
-                      stroke="#F5461A"
-                      strokeLinecap="square"
-                    />
-                  </svg>
-                  <div className="flex-1">
-                    <h3 className="font-mono uppercase tracking-wide text-white mb-2 lg:mb-3">
-                      {problem.title}
-                    </h3>
-                    <p className="font-sans text-white/70 leading-relaxed">
-                      {problem.description}
-                    </p>
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        width="32"
+                        height="32"
+                        fill="#FF3D40"
+                        fillOpacity="0.12"
+                      />
+                      <path
+                        d="M11.1719 11.168L20.8385 20.8346M20.8385 11.168L11.1719 20.8346"
+                        stroke="#F5461A"
+                        strokeLinecap="square"
+                      />
+                    </svg>
+                    <div className="flex-1">
+                      <h3 className="font-mono uppercase tracking-wide text-white mb-2 lg:mb-3">
+                        {problem.title}
+                      </h3>
+                      <p className="font-sans text-white/70 leading-relaxed">
+                        {problem.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </FadeInUp>
             ))}
           </div>
         </div>
 
         {/* Solution Section */}
         <div>
-          <p className="font-sans text-white text-base lg:text-lg leading-relaxed max-w-[800px]">
-            Nexus provides the best of both worlds: reliable AND flexible when
-            needed.
-          </p>
-          <div className="mb-3">
-            <div className="relative w-full h-auto rounded-lg overflow-hidden">
-              <NexusSolutionBG />
-              <Image
-                src="/solution-section/nexus-solution.svg"
-                alt="Nexus Solution"
-                width={1440}
-                height={953}
-                className="w-full h-auto p-4 sm:p-8 lg:p-12"
-                priority
-              />
+          <FadeInUp>
+            <p className="font-sans text-white text-base lg:text-lg leading-relaxed max-w-[800px]">
+              Nexus provides the best of both worlds: reliable AND flexible when
+              needed.
+            </p>
+          </FadeInUp>
+          <FadeInUp delay={0.1}>
+            <div className="mb-3 mt-4">
+              <div className="relative w-full h-auto overflow-hidden">
+                <NexusSolutionBG />
+                <Image
+                  src="/solution-section/nexus-solution.svg"
+                  alt="Nexus Solution"
+                  width={1440}
+                  height={953}
+                  className="w-full h-auto p-4 sm:p-8 lg:p-12"
+                  priority
+                />
+              </div>
             </div>
-          </div>
+          </FadeInUp>
 
           {/* Benefit Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {benefits.map((benefit, index) => (
-              <div
-                key={index}
-                className="bg-[#FFFFFF05] text-sm p-3 flex flex-col gap-2 transition-colors"
-              >
-                <div className="flex items-start gap-4">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
+              <FadeInUp key={index} delay={0.15 + index * 0.05}>
+                <div className="bg-[#FFFFFF05] text-sm p-3 flex flex-col gap-2 transition-colors h-full">
+                  <div className="flex items-start gap-4">
+                    <svg
                       width="32"
                       height="32"
-                      fill="#2D81FF"
-                      fillOpacity="0.13"
-                    />
-                    <mask
-                      id="mask0_1424_916"
-                      maskUnits="userSpaceOnUse"
-                      x="8"
-                      y="8"
-                      width="16"
-                      height="16"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M24 8H8V24H24V8Z" fill="white" />
-                    </mask>
-                    <g mask="url(#mask0_1424_916)">
-                      <path
-                        d="M12 16.7595L14.9091 19.3224L20 12"
-                        stroke="#0066FF"
-                        strokeWidth="1.95439"
-                        strokeLinecap="square"
+                      <rect
+                        width="32"
+                        height="32"
+                        fill="#2D81FF"
+                        fillOpacity="0.13"
                       />
-                    </g>
-                  </svg>
+                      <mask
+                        id="mask0_1424_916"
+                        maskUnits="userSpaceOnUse"
+                        x="8"
+                        y="8"
+                        width="16"
+                        height="16"
+                      >
+                        <path d="M24 8H8V24H24V8Z" fill="white" />
+                      </mask>
+                      <g mask="url(#mask0_1424_916)">
+                        <path
+                          d="M12 16.7595L14.9091 19.3224L20 12"
+                          stroke="#0066FF"
+                          strokeWidth="1.95439"
+                          strokeLinecap="square"
+                        />
+                      </g>
+                    </svg>
 
-                  <div className="flex-1">
-                    <h3 className="font-mono uppercase tracking-wide text-white mb-2 lg:mb-3">
-                      {benefit.title}
-                    </h3>
-                    <p className="font-sans text-white/70 leading-relaxed">
-                      {benefit.description}
-                    </p>
+                    <div className="flex-1">
+                      <h3 className="font-mono uppercase tracking-wide text-white mb-2 lg:mb-3">
+                        {benefit.title}
+                      </h3>
+                      <p className="font-sans text-white/70 leading-relaxed">
+                        {benefit.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </FadeInUp>
             ))}
           </div>
         </div>

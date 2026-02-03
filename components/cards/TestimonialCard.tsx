@@ -56,20 +56,20 @@ export default function TestimonialCard({
 
   return (
     <div
-      className={`flex flex-col lg:flex-row gap-0.5 h-auto lg:h-[420px] ${className}`}
+      className={`flex flex-col max-w-full lg:flex-row gap-0.5 h-auto lg:h-[420px] ${className}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image Card */}
       <div
-        className="relative flex-none w-full lg:w-[308px] h-[280px] sm:h-[350px] lg:h-full bg-neutral-50 cursor-pointer overflow-hidden"
+        className="relative flex-none w-full lg:w-[308px] aspect-[4/3] lg:aspect-auto lg:h-full bg-neutral-50 cursor-pointer overflow-hidden flex items-center justify-center"
         onClick={() => setIsModalOpen(true)}
       >
         <Image
           src={image}
           alt={testimonial}
           fill
-          className="object-cover"
+          className="object-cover object-top"
           unoptimized
         />
         {/* Play Button Overlay */}
@@ -151,25 +151,10 @@ export default function TestimonialCard({
         </div>
       </div>
 
-      {/* Stats Cards - Mobile horizontal scroll */}
-      <div className="flex lg:hidden flex-row gap-2 overflow-x-auto w-full pb-2">
-        {stats.map((stat, index) => (
-          <div
-            key={index}
-            className="flex-shrink-0 flex flex-col gap-2 justify-end bg-neutral-50 p-4 min-w-[140px]"
-          >
-            <h3 className="font-sans text-2xl font-normal text-nexus-black tracking-tight">
-              {stat.number}
-            </h3>
-            <p className="font-mono text-[10px] uppercase text-nexus-black leading-tight">
-              {stat.text}
-            </p>
-          </div>
-        ))}
-      </div>
+
 
       {/* Stats Cards - Desktop */}
-      <div className="hidden lg:flex flex-col gap-0.5 w-[378px]">
+      <div className="flex flex-col gap-0.5">
         {stats.map((stat, index) => (
           <div
             key={index}
