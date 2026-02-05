@@ -3,9 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui";
 
 export default function Header() {
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -43,22 +45,27 @@ export default function Header() {
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    // Only handle hash links (not regular page links)
+    // Only handle hash links (not regular page links like /blog)
     if (href.startsWith("#")) {
-      e.preventDefault();
-      const targetId = href.substring(1);
-      const targetElement = document.getElementById(targetId);
-      
-      if (targetElement) {
-        // Calculate offset for fixed header
-        const headerHeight = 80; // Approximate header height
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+      // If we're on the home page, scroll to the section
+      if (pathname === "/") {
+        e.preventDefault();
+        const targetId = href.substring(1);
+        const targetElement = document.getElementById(targetId);
         
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
-        });
+        if (targetElement) {
+          // Calculate offset for fixed header
+          const headerHeight = 80; // Approximate header height
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: "smooth",
+          });
+        }
       }
+      // If we're on a different page, the Link component will navigate to /#section
+      // which Next.js will handle by going to the home page with the hash
     }
     // For non-hash links (like /blog), let Next.js handle navigation normally
   };
@@ -95,17 +102,21 @@ export default function Header() {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden ml-[22px] lg:flex items-center gap-6 lg:gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="group relative text-nexus-black font-sans text-sm font-medium transition-opacity"
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-nexus-black transition-all duration-500 [transition-timing-function:cubic-bezier(1,0.17,0.16,0.88)] group-hover:w-full"></span>
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              // If we're not on home page and link is a hash, prepend / to navigate to home page
+              const href = link.href.startsWith("#") && pathname !== "/" ? `/${link.href}` : link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="group relative text-nexus-black font-sans text-sm font-medium transition-opacity"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-nexus-black transition-all duration-500 [transition-timing-function:cubic-bezier(1,0.17,0.16,0.88)] group-hover:w-full"></span>
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Desktop Action Buttons */}
@@ -145,19 +156,23 @@ export default function Header() {
           }`}
         >
           <nav className="flex flex-col gap-4 py-4 border-t border-nexus-grey-medium">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={(e) => {
-                  handleNavClick(e, link.href);
-                  setIsMobileMenuOpen(false);
-                }}
-                className="text-nexus-black font-sans text-sm font-medium hover:opacity-70 transition-opacity py-2"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              // If we're not on home page and link is a hash, prepend / to navigate to home page
+              const href = link.href.startsWith("#") && pathname !== "/" ? `/${link.href}` : link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={href}
+                  onClick={(e) => {
+                    handleNavClick(e, link.href);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="text-nexus-black font-sans text-sm font-medium hover:opacity-70 transition-opacity py-2"
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <div className="flex flex-col gap-3 pt-2">
               <Button variant="primary" href="https://calendly.com/d/crcb-qfd-592" className="w-full">
                 REQUEST A DEMO

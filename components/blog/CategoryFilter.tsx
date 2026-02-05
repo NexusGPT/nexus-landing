@@ -14,8 +14,8 @@ export default function TagFilter({
   onTagChange,
 }: TagFilterProps) {
   return (
-    <FadeInUp className="w-full px-8 lg:px-20 py-8 border-b border-nexus-grey-light/20">
-      <div className="max-w-[1440px] mx-auto">
+    <FadeInUp className="w-full px-8 lg:px-20">
+      <div className="max-w-[1440px] mx-auto border-y border-nexus-grey-light/20 py-8">
         <div className="flex flex-wrap gap-4">
           <button
             onClick={() => onTagChange(null)}
